@@ -57,33 +57,57 @@ borrower1.returnBook("The Great Gatsby");
 console.log(borrower1.borrowedBooks);
 // Expected output: []
 
-//Task 3-
-// Define the Library class
+
+// Task 3-
+// This defines the Library class
 class Library {
     constructor() {
-        this.books = []; // Array of Book instances
-        this.borrowers = []; // Array of Borrower instances
+        this.books = [];
+        this.borrowers = []; 
     }
- 
- 
-    // Method to add a new book to the library
+
+    // 
     addBook(book) {
         this.books.push(book);
-    }
- 
- 
-    // Method to list all books' details
+    }// logging the addition of a new book to library
+
+    
     listBooks() {
-        this.books.forEach((book) =>{ console.log(book.getDetails());
-        })
+        this.books.forEach((book) => {
+            console.log(book.getDetails());
+        });
+    }// logging all of the books' detail
+
+    //Task 4
+    lendBook(borrowerID, isbn) { //method for implementating book borrowing
+        const book = this.books.find(b => b.isbn === isbn);
+
+        const borrower = this.borrowers.find(b => b.borrowerID === borrowerID);
+
+        if (book && borrower) {
+            if (book.copies > 0) {
+                book.copies  (-1); 
+                borrower.borrowBook(book);
+
+                console.log(`Book "${book.title}" has been lent to the name of ${borrower.name}.`); 
+            } else {console.log("No present or available copies."); 
+            }
+        } else {console.log(" book along with the borrower wasn't found."); 
+        }
     }
- }
- 
- 
- // Test Cases
- const library = new Library();
- library.addBook(book1);
- library.listBooks();
- // Expected output: "Title: The Great Gatsby, Author: F. Scott Fitzgerald, ISBN: 123456, Copies: 4"
+}// logging the method associate  for a borrower to be lended a book
+
+
+// Test Cases
+const library = new Library();
+library.addBook(book1);
+library.listBooks();
+// Expected output: "Title: The Great Gatsby, Author: F. Scott Fitzgerald, ISBN: 123456, Copies: 4"
+
+library.lendBook(201, 123456);
+console.log(book1.getDetails());
+// Expected output: "Title: The Great Gatsby, Author: F. Scott Fitzgerald, ISBN: 123456, Copies: 3"
+console.log(borrower1.borrowedBooks);
+// Expected output: ["The Great Gatsby"]
  
 
